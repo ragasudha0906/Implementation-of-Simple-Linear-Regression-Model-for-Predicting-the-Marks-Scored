@@ -20,37 +20,56 @@ To write a program to predict the marks scored by a student using the simple lin
 Program to implement the simple linear regression model for predicting the marks scored.
 Developed by: RAGASUDHA R
 RegisterNumber: 212224230215
-
-
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-
-hours = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).reshape(-1, 1)
-marks = np.array([20, 25, 35, 45, 50, 60, 65, 70, 80, 85])
-
-model = LinearRegression()
-model.fit(hours, marks)
-
-predicted_marks = model.predict(hours)
-
-plt.scatter(hours, marks, label="Actual Data")
-
-plt.plot(hours, predicted_marks, label="Regression Line")
-
-plt.xlabel("Hours Studied")
-plt.ylabel("Marks Scored")
-plt.title("Hours vs Marks (Simple Linear Regression)")
-plt.legend()
-plt.show()
- 
 */
+```
+
+```
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = pd.read_csv("student_scores.csv")
+
+X = data['Hours'].values
+Y = data['Scores'].values
+
+X_mean = np.mean(X)
+Y_mean = np.mean(Y)
+
+num = 0
+den = 0
+for i in range(len(X)):
+    num += (X[i] - X_mean) * (Y[i] - Y_mean)
+    den += (X[i] - X_mean) ** 2
+
+m = num / den
+
+b = Y_mean - (m * X_mean)
+
+Y_pred = m * X + b
+
+print("Slope (m):", m)
+print("Intercept (b):", b)
+
+hours = float(input("Enter number of study hours: "))
+predicted_marks = m * hours + b
+print("Predicted Marks:", predicted_marks)
+
+plt.scatter(X, Y)
+plt.plot(X, Y_pred)
+plt.xlabel("Study Hours")
+plt.ylabel("Marks Scored")
+plt.title("Simple Linear Regression – Marks Prediction")
+plt.show()
+
+
 ```
 
 ## Output:
 
+<img width="972" height="835" alt="Screenshot 2026-01-28 161356" src="https://github.com/user-attachments/assets/1d959879-2e62-4887-b2d6-7c5e0415d5a4" />
 
-<img width="763" height="573" alt="Screenshot 2026-01-27 152531" src="https://github.com/user-attachments/assets/9e83ad2f-c7c8-45c6-86c8-2d290acfeb7e" />
+
 
 ## Result:
 Thus the program to implement the simple linear regression model for predicting the marks scored is written and verified using python programming.
